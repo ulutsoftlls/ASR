@@ -3,11 +3,8 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import time
 import csv
 import tqdm
-
-# Define the path to the trained model and tokenizer
 model_path = "/mnt/ks/Works/t2t/fine-tune-mistral/cont_output/2604369c-e818-4756-9e37-db396d9ac427/epoch_2/step_879"  # Update with the actual path
 tokenizer_path = "/mnt/ks/Works/t2t/fine-tune-mistral/cont_output/2604369c-e818-4756-9e37-db396d9ac427/epoch_2/step_879"  # Update with the actual path
-device = "cuda"
 class TextGenerator:
     def __init__(self):
         self.bnb_config = BitsAndBytesConfig(
@@ -20,34 +17,34 @@ class TextGenerator:
                     model_path,
                     quantization_config=self.bnb_config,
                     device_map="auto",
-                    trust_remote_code=True,
-                    use_auth_token=True
+                    trust_remote_code=True
                 )
 
         # Load the trained model and tokenizer
         #model = AutoModelForCausalLM.from_pretrained(model_path)
         self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_path, add_bos_token=True, trust_remote_code=True)
-        device = torch.device(device)
-       
+        self.pipe = pipeline(
+            "text-generation",
+            model=self.model,
+            tokenizer=self.tokenizer,
+            use_cache=True,
+            device_map="auto",
+            max_length=100,
+            do_sample=False,
+            num_return_sequences=1,
+            eos_token_id=self.tokenizer.eos_token_id,
+            pad_token_id=self.tokenizer.eos_token_id,
+        )
+
         # Set the device for inference (e.g., GPU if available)
         #device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.device = 'cuda'
 
-    def generate_text(self, prompt,max_length=100):
-        device = self.device
-        input_ids = self.tokenizer(prompt, return_tensors="pt").to(self.device)
-        with torch.no_grad():
-             time_v = time.time()
-        
-             generated_tokens = self.model.generate(
-                 **input_ids, max_new_tokens=100, do_sample=False, pad_token_id=50256
-             ).to(device)
-             print("generate time = ", time.time() - time_v)
-             generated_text = self.tokenizer.decode(
-                 generated_tokens[0], skip_special_tokens=True
-             )
-             time_c = time.time() - time_v
-             print(generated_text)
-        return generated_text,time_c      
+    def generate_text(self, prompt, max_length=300):
+        time_v = time.time()
+        result = self.pipe(f"<s>[INST] {prompt} [/INST]")
+        print("generate time = ", time.time() - time_v)
+        return result[0]["generated_text"]   
         
 def save_to_csv(prompt, generated_text,filename='output_mistral4s.csv'):
     with open(filename, mode='a', newline='',encoding='utf-8') as file:
