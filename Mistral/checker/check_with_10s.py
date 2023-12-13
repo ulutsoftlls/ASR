@@ -32,7 +32,7 @@ class TextGenerator:
                 time_v = time.time()
                 generated_tokens = self.model.generate(
                     input_ids, max_length=max_length
-                ).to('cpu')
+                ).to(device)
                 print("time for output = ", time.time() - time_v)
                 generated_text = self.tokenizer.decode(
                     generated_tokens[0], skip_special_tokens=True
