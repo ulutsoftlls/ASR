@@ -40,7 +40,7 @@ class TextGenerator:
                 generated_texts.append(generated_text)
         return generated_texts
 
-    def save_to_csv(self, prompts, generated_texts, filename='output2.csv'):
+    def save_to_csv(self, prompts, generated_texts, filename='output_mistral10s.csv'):
         with open(filename, mode='w', newline='', encoding='utf-8') as file:
             writer = csv.writer(file)
             writer.writerow(['Prompt', 'Generated Text'])

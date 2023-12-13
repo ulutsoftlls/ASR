@@ -49,7 +49,15 @@ class TextGenerator:
              print(generated_text)
         return generated_text,time_c      
         
+def save_to_csv(prompt, generated_text,filename='output_mistral4s.csv'):
+    with open(filename, mode='a', newline='',encoding='utf-8') as file:
 
+        writer = csv.writer(file)
+        if file.tell() == 0:
+            writer.writerow(['Prompt', 'Generated Text'])
+
+        generated_text = generated_text[len(prompt)+18:]
+        writer.writerow([prompt, generated_text])
 
 # Example prompts for text generation
 text_generator = TextGenerator()
@@ -64,4 +72,5 @@ text_generator.save_to_csv(prompts, generated_texts)
 # Print generated texts
 for prompt, generated_text in zip(prompts, generated_texts):
     print(f"Prompt: {prompt}\nGenerated Text: {generated_text}\n")
+    save_to_csv(prompt, generated_text)
 
