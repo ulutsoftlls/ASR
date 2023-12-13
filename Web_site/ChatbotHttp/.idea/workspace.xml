@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2fa61e2c-b007-47cd-9fab-3368f5f6a3be" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/django-chatbot-main.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/claudia.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/static/chatbot/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/static/chatbot/img/logo_blue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/templates/chatbot/audio4.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/templates/chatbot/base.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/templates/chatbot/chatbot.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/templates/chatbot/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/templates/chatbot/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/templates/chatbot/register.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/templates/chatbot/speech.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/chatbot/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/chatbot/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/chatbot/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/chatbot/apps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/chatbot/claudia.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/chatbot/claudia.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/chatbot/consumers.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/chatbot/consumers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/chatbot/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/chatbot/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/chatbot/migrations/0002_alter_chat_created_at.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/chatbot/migrations/0002_alter_chat_created_at.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/chatbot/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/chatbot/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/chatbot/routing.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/chatbot/routing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/chatbot/static/chatbot/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/chatbot/static/chatbot/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/chatbot/templates/chatbot/audio4.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/chatbot/templates/chatbot/audio4.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/chatbot/templates/chatbot/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/chatbot/templates/chatbot/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/chatbot/templates/chatbot/chatbot.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/chatbot/templates/chatbot/chatbot.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/chatbot/templates/chatbot/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/chatbot/templates/chatbot/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/chatbot/templates/chatbot/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/chatbot/templates/chatbot/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/chatbot/templates/chatbot/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/chatbot/templates/chatbot/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/chatbot/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/chatbot/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/chatbot/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/chatbot/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/chatbot/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/chatbot/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/django_chatbot/asgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/django_chatbot/asgi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/django_chatbot/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/django_chatbot/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/django_chatbot/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/django_chatbot/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/django_chatbot/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/django_chatbot/wsgi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/manage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_chatbot/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/django_chatbot/requirements.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2ZRYLcWGRkXwGFqEkCwAQP9asPW" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;adilet&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-67fca87a943a-c986f194a52a-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.11799.259" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2fa61e2c-b007-47cd-9fab-3368f5f6a3be" name="Changes" comment="" />
+      <created>1702386304385</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1702386304385</updated>
+      <workItem from="1702386305491" duration="13548000" />
+      <workItem from="1702400801748" duration="10488000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

@@ -1,0 +1,196 @@
+{% extends 'chatbot/base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+
+<div class="chat-container">
+  <div class="card flex-grow-1">
+
+{#      <div class="card-header bg-light text-black fixed-top">#}
+{#          <b style="font-size: 20px">AI Ulut Soft</b>#}
+{#{% if user.is_authenticated %}#}
+{#     <span >Кош келиңиз, {{user.username}}</span>#}
+{#    {% endif %}#}
+
+
+
+
+
+    <div class="card-body messages-box">
+      
+      <ul id="messagesListID" class=" messages-list">
+
+        <!-- <li class="message received">
+          <div class="message-text">
+            <div class="message-sender">
+              <b>AI Chatbot</b>
+            </div>
+            <div class="message-content">
+{#              Hi {{user.username}}, I am your AI Chatbot, you can ask me anything.#}
+            </div>
+          </div>
+        </li> -->
+
+{#        {% for chat in chats %}#}
+{#          {% if chat.user == request.user %}#}
+{##}
+{#            <li class="message sent">#}
+{#          <div class="message-text">#}
+{#            <div class="message-sender">#}
+{#              <b>Сиз {{chat.time}}</b>#}
+{#            </div>#}
+{#            <div class="message-content">#}
+{#              {{chat.message}}#}
+{#            </div>#}
+{#          </div>#}
+{#        </li>#}
+{##}
+{#        <li class="message received">#}
+{#          <div class="message-text">#}
+{#            <div class="message-sender">#}
+{#              <b>AI Ulut Soft</b>#}
+{#            </div>#}
+{#            <div class="message-content">#}
+{#              {{chat.response}}#}
+{#            </div>#}
+{#          </div>#}
+{#        </li>#}
+{##}
+{#          {% endif %}#}
+{#        {% endfor %}#}
+        
+      </ul>
+
+
+    </div>
+    <div class="card-body btn-scroll col-sm-11 ">
+            <div id="scroll-to-bottom" class="button-down"></div>
+{#            <button >Scroll to Bottom</button>#}
+        </div>
+    <br><br>
+    <br><br>
+    <br><br>
+  </div>
+  <form class="message-form">
+    {%csrf_token%}
+    <div class="input-group">
+      <input type="text" class="form-control message-input" autofocus="autofocus" placeholder="Бул жерге жазыңыз...">
+      <div class="input-group-append">
+        <button type="submit" class="btn btn-dark btn-send">Жөнөтүү</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<script>
+  const messagesList = document.querySelector('.messages-list');
+  const messageForm = document.querySelector('.message-form');
+  const messageInput = document.querySelector('.message-input');
+  const scrollButtonDown = document.getElementById("scroll-to-bottom");
+  const messagesListID = document.getElementById("messagesListID");
+  // Function to check if chat is at the bottom
+function isChatAtBottom() {
+    return messagesListID.scrollTop + messagesListID.clientHeight >= messagesListID.scrollHeight;
+}
+
+// Function to toggle the visibility of the scroll button
+function toggleScrollButton() {
+    if (isChatAtBottom()) {
+        scrollButtonDown.style.display = 'none';
+    } else {
+        scrollButtonDown.style.display = 'block';
+    }
+}
+
+// Function to scroll to the bottom
+function scrollToBottom() {
+    messagesListID.scrollTop = messagesListID.scrollHeight;
+    toggleScrollButton();
+}
+function handleMouseWheelScroll(event) {
+    // Check if the user is scrolling down
+    if (event.deltaY > 0) {
+        // User is scrolling down
+        scrollButtonDown.style.display = 'none';
+    } else if (event.deltaY < 0) {
+        // User is scrolling up
+        scrollButtonDown.style.display = 'block';
+    }
+}
+
+// Attach scroll event listener to the chat container
+messagesListID.addEventListener('scroll', toggleScrollButton);
+
+// Attach click event to the scroll button
+scrollButtonDown.addEventListener('click', scrollToBottom);
+messagesListID.addEventListener('wheel', handleMouseWheelScroll);
+
+  messageForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const message = messageInput.value.trim();
+    if (message.length === 0) {
+      return;
+    }
+
+    const messageItem = document.createElement('li');
+    messageItem.classList.add('message', 'sent');
+    const date = new Date();
+    var current_date = date.getFullYear()+"-"+(String(date.getMonth()+1).padStart(2,"0"))+"-"+ (String(date.getDate()).padStart(2, '0'));
+	var current_time = (String(date.getHours()).padStart(2, '0'))+":"+(String(date.getMinutes()).padStart(2, '0'))+":"+ (String(date.getSeconds()).padStart(2, '0'));
+	const date_time = current_date+" "+current_time;
+    {#let currentDay= String(date.getDate()).padStart(2, '0');#}
+    {#let currentMonth = String(date.getMonth()+1).padStart(2,"0");#}
+    {#let currentYear = date.getFullYear();#}
+    //const currentDate = `${currentYear}-${currentMonth}-${currentDay}`;
+    messageItem.innerHTML = `
+        <div class="message-text">
+            <div class="message-sender">
+                <b>Сиз ${date_time}</b>
+            </div>
+            <div class="message-content">
+                ${message}
+            </div>
+        </div>
+        `;
+    messagesList.appendChild(messageItem);
+    const chatContainer = document.querySelector(".messages-list");
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    messageInput.value = '';
+
+    fetch('', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+        'message': message
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        const response = data.response;
+        const time = data.time;
+        const messageItem = document.createElement('li');
+        messageItem.classList.add('message', 'received');
+        messageItem.innerHTML = `
+        <div class="message-text">
+            <div class="message-sender">
+              <b>AI Ulut Soft ${time}</b>
+            </div>
+            <div class="message-content">
+                ${response}
+            </div>
+        </div>
+          `;
+        messagesList.appendChild(messageItem);
+        const chatContainer = document.querySelector(".messages-list");
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      });
+  });
+
+</script>
+{% endblock %}

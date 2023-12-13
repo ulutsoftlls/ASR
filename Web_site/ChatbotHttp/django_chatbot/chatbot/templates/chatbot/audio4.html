@@ -1,0 +1,279 @@
+{% extends 'chatbot/base.html' %}
+{% load static %}
+
+{% block title %}
+{{title}}
+{% endblock title %}
+
+{% block content %}
+<section id="hero" class="d-flex align-items-center">
+    <div class="container">
+        <div class="row">
+            <div class="row">
+            <div class="col-sm-6">
+
+                    <br>
+                    <button id="startRecording2" class="btn" style="margin: 3px; color: black;
+    background-color: #bfbfbf;
+    border-color: #666666; border-width: 2px">Жаздырууну баштоо</button>
+                        <button id="stopRecording2" class="btn btn-primary " style="margin: 3px; color: black;
+    background-color: #bfbfbf;
+    border-color: #666666; border-width: 2px" disabled>Токтотуу</button>
+                <span id="timer" style="font-size: 20px">00:00</span>
+                
+                <p style="font-size: 14px; margin-top: 10px">Эскертүү: Үн жаздыруунун мөөнөтү 1 мүнөттөн ашпоого тийиш</p>
+                <p style="font-size: 18px;">Үн тандаңыз: </p>
+                                <label class="radio">
+                                    <input type="radio" id="man" value="man" name="choose">
+                                    <span>Нурбек</span>
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" checked="checked" name="choose" id="woman" value="woman"
+                                           required>
+                                    <span>Нурай</span>
+                                </label>
+                
+<!--                        <button class="btn btn-primary " id="sendAudio" style="margin: 3px" disabled>Жөнөтүү</button>-->
+
+            </div>
+
+            </div>
+
+
+
+
+
+
+            <div class="row">
+                <div class="col-sm-4" style="margin-top: 20px;">
+            	<p id="audio_info" style="font-size: 18px; display: none;  ">Жаздырылган аудио:</p>
+                <audio controls id="audioPlayer1" class="hidden" style="width: 400px; margin-top: 5px">
+                <source src="" type="audio/wav">
+                Браузериңиз аудио элементти колдобойт
+                </audio>
+                </div>
+                <div class="col-sm-4" style="margin-top: 20px;">
+                <p id="audio_info2" style="font-size: 18px; display: none;">Жооп:</p>
+                <audio controls id="audioPlayer2" class="hidden" style="width: 400px; margin-top: 5px">
+                <source src="" type="audio/wav">
+                Браузериңиз аудио элементти колдобойт
+                </audio>
+                    </div>
+{#                <div class="col-sm-4" style="margin-top: 20px;">#}
+{#                <p id="audio_info3" style="font-size: 18px; display: none;">From Mistral:</p>#}
+{#                <audio controls id="audioPlayer3" class="hidden" style="width: 400px; margin-top: 5px">#}
+{#                <source src="" type="audio/wav">#}
+{#                Браузериңиз аудио элементти колдобойт#}
+{#                </audio>#}
+{#                </div>#}
+            <div class="col-sm-6" style="margin-top: 20px; width: 250px">
+                <div class="spinner-block hidden" id="loading2">
+                  <div class="spinner spinner-1"></div>
+                </div>
+{#            <button id="loading2" class="btn btn-primary hidden" disabled>#}
+{#              <span class="spinner-border spinner-border-sm"></span>#}
+{#              Күтө туруңуз...#}
+{#            </button>#}
+            </div>
+                </div>
+                <p id="audio_text" style="font-size: 18px; display: none; margin-top: 5px">Текст:</p>
+            <div class="col-sm-12" style="margin-top: 5px; font-size: 4rem">
+                <p> <span id="myText"> </span></p>
+                </div>
+
+
+        </div>
+            </div>
+</section>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+     const players = Array.from(document.querySelectorAll('audio')).map(player => {
+            return new Plyr(player, {
+                controls: ['play', 'progress', 'current-time', 'mute', 'settings', 'speed'],
+          speed: {
+        selected: 1, // Выбранная скорость по умолчанию (1x)
+        options: [0.5, 1, 1.5, 2] // Варианты доступных скоростей
+      }
+            });
+        });
+     players.forEach(player => {
+                player.elements.container.style.display = 'none';
+            });
+
+
+
+
+
+
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+
+    let mediaRecorder2;
+    let audioChunks2 = [];
+    let audioPlayer_input = document.getElementById('audioPlayer1');
+    let audioPlayer_output = document.getElementById('audioPlayer2');
+    //let audioPlayer_output2 = document.getElementById('audioPlayer3');
+    let startRecordingButton2 = document.getElementById('startRecording2');
+    let stopRecordingButton2 = document.getElementById('stopRecording2');
+    //let sendAudioButton = document.getElementById('sendAudio');
+    const loading2 = document.getElementById("loading2");
+    const audio_info = document.getElementById("audio_info");
+    const audio_info2 = document.getElementById("audio_info2");
+    //const audio_info3 = document.getElementById("audio_info3");
+  	const audio_text = document.getElementById("audio_text");
+  	const my_text = document.getElementById("myText");
+      const man = document.getElementById("man");
+const woman = document.getElementById("woman");
+const plyrAudioContainer = document.querySelector('.plyr--audio');
+    plyrAudioContainer.style.display = 'none';
+
+let choose = '';
+    let startTime;
+    const recordingDuration = 1 * 61 * 1000; // 1 minutes in milliseconds
+    man.addEventListener("change", updateResult);
+    woman.addEventListener("change", updateResult)
+    function updateResult() {
+  if (man.checked) {
+    choose = "man";
+  } else if (woman.checked) {
+    choose = "woman";
+  }
+}
+    navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(function (stream) {
+            mediaRecorder2 = new MediaRecorder(stream);
+
+            mediaRecorder2.ondataavailable = function (event) {
+                if (event.data.size > 0) {
+                    audioChunks2.push(event.data);
+                }
+            };
+
+
+            function updateTimer() {
+            const currentTime = new Date().getTime();
+            const elapsedTime = currentTime - startTime;
+            const remainingTime = recordingDuration - elapsedTime;
+
+            if (remainingTime < 0) {
+                stopRecording();
+                return;
+            }
+            const seconds = Math.floor(elapsedTime / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+            document.getElementById('timer').textContent = formattedTime;
+            }
+
+
+            function stopRecording() {
+            mediaRecorder2.stop();
+                stopRecordingButton2.disabled = true;
+                startRecordingButton2.disabled = false;
+            }
+            mediaRecorder2.onstart = () => {
+                startTime = new Date().getTime();
+                updateTimer();
+                timerInterval = setInterval(updateTimer, 1000); // Update timer every second
+                setTimeout(stopRecording, recordingDuration); // Automatically stop recording after 5 minutes
+            };
+            mediaRecorder2.onstop = function () {
+                clearInterval(timerInterval);
+                const audioBlob = new Blob(audioChunks2, { type: 'audio/wav' });
+                audioPlayer_input.src = URL.createObjectURL(audioBlob);
+                audioPlayer_input.style.display = "none";
+                audioPlayer_output.style.display = "none";
+                //audioPlayer_output2.style.display = "none";
+                startRecordingButton2.disabled = true;
+                //sendAudioButton.disabled = false;
+                // Save the audio to your Django backend here using fetch or XMLHttpRequest
+                // For example, send it to a Django view for processing and storage
+                loading2.style.display = "block";
+                plyrAudioContainer.style.display = 'none';
+                players.forEach(player => {
+                player.elements.container.style.display = 'none';
+            });
+                audio_info.style.display = "none";
+                audio_info2.style.display = "none";
+                //audio_info3.style.display = "none";
+          		audio_text.style.display = "none";
+          		my_text.style.display = "none";
+                const formData = new FormData();
+                formData.append('audio2', audioBlob, 'audio.wav');
+                formData.append('choose', choose);
+                fetch('/speech/', {
+
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+
+                        // window.location.reload(true);
+                    const audio_url_input = data.audio_url_input;
+                    const audio_url_output = data.audio_url_output;
+                    //const audio_url_output2 = data.audio_url_output2;
+
+                    audioPlayer_input.src = audio_url_input;
+                    audioPlayer_output.src = audio_url_output;
+                    //audioPlayer_output2.src = audio_url_output2;
+                        audioPlayer_input.type="audio/wav"
+                        audioPlayer_input.style.display = "block";
+                        loading2.style.display = "none";
+                    audioPlayer_output.style.display = "block";
+                    audioPlayer_output.type="audio/mpeg"
+                        //audioPlayer_output2.style.display = "block";
+                    //audioPlayer_output2.type="audio/mpeg"
+                    plyrAudioContainer.style.display = 'block';
+                    players.forEach(player => {
+                player.elements.container.style.display = 'block';
+            });
+
+			audio_info.style.display = "block";
+                    audio_info2.style.display = "block";
+                    //audio_info3.style.display = "block";
+          		//audio_text.style.display = "block";
+                    //var text = data.text;
+                    //document.getElementById("myText").innerHTML = 'text';
+                    //my_text.style.display = "block";
+                    startRecordingButton2.disabled = false;
+                    //document.getElementById("audio").innerHTML = audioUrl;
+                }
+
+                })
+
+
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            };
+            startRecordingButton2.addEventListener('click', function () {
+                audioChunks2 = [];
+                mediaRecorder2.start();
+                startRecordingButton2.disabled = true;
+                stopRecordingButton2.disabled = false;
+                //sendAudioButton.disabled = true;
+            });
+
+            stopRecordingButton2.addEventListener('click', function () {
+                mediaRecorder2.stop();
+                stopRecordingButton2.disabled = true;
+                startRecordingButton2.disabled = false;
+
+            });
+
+            // playRecordingButton.addEventListener('click', function () {
+            //     audioPlayer.play();
+            // });
+
+        })
+        .catch(function (error) {
+            console.error('Error accessing the microphone:', error);
+        });
+} else {
+    console.error('mediaRecorder2 API not supported in this browser.');
+}
+});
+
+</script>
+{% endblock %}
